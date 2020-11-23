@@ -22,7 +22,7 @@ http://127.0.0.1:8080/api/mysql/domaintestlog/d/
 http://127.0.0.1:8080/api/mysql/domaintestlog/d/all/
 
 
-### 測試資料
+### POSTMAN測試資料
 {
      "id":1,
      "TestTime":"2020-11-19 00:00:00.000",
@@ -60,7 +60,7 @@ http://127.0.0.1:8080/api/mysql/domainlistall/d/
 http://127.0.0.1:8080/api/mysql/domainlistall/d/all/
 
 
-### 測試資料
+### POSTMAN測試資料
 
 {
     "AgentID":"222",
