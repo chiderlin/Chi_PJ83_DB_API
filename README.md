@@ -7,7 +7,7 @@
 2. DomainListAll
 
 # DomainTestLog  (以下參考網址路徑)  
-### 新增資料
+### 新增資料(單筆)
 http://127.0.0.1:8080/api/mysql/domaintestlog/c/
 
 ### 讀取
@@ -23,7 +23,7 @@ http://127.0.0.1:8080/api/mysql/domaintestlog/d/all/
 
 
 # DomainListAll (以下參考網址路徑) 
-### 新增資料
+### 新增資料(單筆)
 http://127.0.0.1:8080/api/mysql/domainlistall/c/
 
 ### 讀取
