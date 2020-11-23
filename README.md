@@ -7,16 +7,16 @@
 2. DomainListAll
 
 # DomainTestLog  (以下參考網址路徑)  
-### 新增資料(單筆)
+### 新增資料(單筆):POST
 http://127.0.0.1:8080/api/mysql/domaintestlog/c/
 
-### 讀取
+### 讀取:GET
 http://127.0.0.1:8080/api/mysql/domaintestlog/r/
 
-### 修改(單筆)
+### 修改(單筆):PUT
 http://127.0.0.1:8080/api/mysql/domaintestlog/u/"放id"/
 
-### 刪除
+### 刪除:DELETE
 http://127.0.0.1:8080/api/mysql/domaintestlog/d/
 
 http://127.0.0.1:8080/api/mysql/domaintestlog/d/all/
@@ -45,16 +45,16 @@ http://127.0.0.1:8080/api/mysql/domaintestlog/d/all/
 
 
 # DomainListAll (以下參考網址路徑) 
-### 新增資料(單筆)
+### 新增資料(單筆):POST
 http://127.0.0.1:8080/api/mysql/domainlistall/c/
 
-### 讀取
+### 讀取:GET
 http://127.0.0.1:8080/api/mysql/domainlistall/r/
 
-### 修改(單筆)
+### 修改(單筆):PUT
 http://127.0.0.1:8080/api/mysql/domainlistall/u/"放codetomatch"/
 
-### 刪除
+### 刪除:DELETE
 http://127.0.0.1:8080/api/mysql/domainlistall/d/
 
 http://127.0.0.1:8080/api/mysql/domainlistall/d/all/
