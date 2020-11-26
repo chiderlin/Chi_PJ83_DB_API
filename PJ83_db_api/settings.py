@@ -101,16 +101,16 @@ DATABASES = {
         'NAME': 'DEV_PJ83BN',
         'USER': 'root',
         'PASSWORD': 'qwer1234',
-        'HOST': '172.28.0.10',
-        'PORT': '3306',
+        'HOST': '10.80.1.20',
+        'PORT': '33061',
     },
     'slave': { # Read-Only
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'DEV_PJ83BN',
         'USER': 'root',
         'PASSWORD': 'qwer1234',
-        'HOST': '172.28.0.11',
-        'PORT': '3306',
+        'HOST': '10.80.1.20',
+        'PORT': '33062',
     }
 }
 
@@ -139,13 +139,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
