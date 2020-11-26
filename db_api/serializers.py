@@ -36,12 +36,4 @@ class DomainTestLogSerializer(serializers.ModelSerializer):
             'CreatedTime',
         )
 
-class FileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Files
-        fields = (
-            'Remark1',
-            'Remark2',
-            'File',
 
-        )

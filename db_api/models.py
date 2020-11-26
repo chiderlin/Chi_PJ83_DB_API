@@ -1,23 +1,19 @@
 from django.db import models
 
 # Create your models here.
-
-
 class DomainListAll(models.Model):
     """
     a migrate --fake table.
     """
-    # id = models.AutoField(primary_key=True)
-    AgentID = models.CharField(max_length=30)
-    CodeToMatch = models.CharField(primary_key=True, max_length=50)
+    id = models.AutoField(primary_key=True)
+    AgentID = models.CharField(max_length=30, unique=True)
+    CodeToMatch = models.CharField(max_length=50, unique=True)
     DomainListAPP = models.CharField(max_length=300)
     DomainListInner = models.CharField(max_length=300)
     DomainListOuter = models.CharField(max_length=300)
     CreatedTime = models.DateTimeField(auto_now_add=True, null=True)
     class Meta:
         db_table = "DomainListAll"
-
-
 
 
 class DomainTestLog(models.Model):
@@ -41,11 +37,3 @@ class DomainTestLog(models.Model):
     CreatedTime = models.DateTimeField(auto_now_add=True, null=True)
     class Meta:
         db_table = "DomainTestLog"
-
-
-class Files(models.Model):
-    Remark1 = models.CharField(max_length=20)
-    Remark2 = models.CharField(max_length=20)
-    File = models.FileField(blank=False, null=False, upload_to='files/%Y/%m/%d')
-    class Meta:
-        db_table = "ZipFileTest"
