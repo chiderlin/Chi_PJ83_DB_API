@@ -15,7 +15,7 @@ def C_data_DomainTestLog(request):
     ''' add new data to database.'''
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        results = data['results']
+        results = data['data']
         results_data = []
         for result in results:
             results_data.append(DomainTestLog(
@@ -91,7 +91,7 @@ def C_data_DomainListAll(request):
     ''' add new data to database.'''
     if request.method == 'POST':
         data = JSONParser().parse(request)
-        results = data['results']
+        results = data['data']
         results_data = []
         for result in results:
             results_data.append(DomainListAll(
