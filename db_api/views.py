@@ -3,10 +3,9 @@ from django.http.response import JsonResponse
 from django.core import serializers
 from rest_framework.parsers import JSONParser, FormParser, MultiPartParser, FileUploadParser
 from rest_framework import status
-from rest_framework.views import APIView
 from rest_framework.decorators import api_view
-from db_api.models import DomainTestLog, DomainListAll, Files
-from db_api.serializers import DomainTestLogSerializer, DomainListAllSerializer, FileSerializer
+from db_api.models import DomainTestLog, DomainListAll
+from db_api.serializers import DomainTestLogSerializer, DomainListAllSerializer
 import time
 
 
@@ -150,54 +149,3 @@ def D_all_data_DomainListAll(request):
         if count[1]["db_api.DomainListAll"] == 0:
             return JsonResponse({'message':'Database was already empty.'})
         return JsonResponse({'message': f'Total {count[0]} was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
-
-#FIXME:未成功
-class FileView(APIView):
-    parser_classes = (FileUploadParser, JSONParser, FormParser, MultiPartParser,)
-    # parser_classes = (JSONParser,)
-    def post(self, request, format=None):
-        print(request.content_type)
-        # print(request.data)
-        print("111")
-        # print(request.POST)
-        # print(request.FILES)
-        # print(request.data)
-        # data = request.data['file']
-        # print(data)
-        print("2222")
-        file_serializer = FileSerializer(data=request.data)
-        if file_serializer.is_valid():
-            file_serializer.save()
-            return JsonResponse(file_serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return JsonResponse(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def get(self, request):
-        files = Files.objects.all()
-        file_serializer = FileSerializer(files, many=True)
-        return JsonResponse(file_serializer.data, status=status.HTTP_200_OK)
-
-
-
-# @api_view(['POST'])
-# def upload_file(request):
-#     if request.method == 'POST':
-#         file_ob = open(r'D:\PJ83\env01\PJ83_db_api\11.txt', "rb")
-#         print(file_ob)
-#         payload = {
-#         'Remark1': 'hey',
-#         'Remark2': 'hello',
-#         'File': file_ob
-#         }
-#         r = requests.post("http://127.0.0.1:8080/api/7zfile/download/", files=file_ob, data=payload)
-#         print(r.status_code)
-
-#     #     with open(f,"rb") as z:
-#     #         binary = z.read()
-#     #         return JsonResponse({'message':f'{binary}'})
-#     # else:
-#     #     return JsonResponse({'message':'POST only'})
-# @api_view(['GET'])
-# def download_file(request):
-#     pass
-

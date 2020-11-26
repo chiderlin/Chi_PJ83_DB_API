@@ -34,10 +34,6 @@ urlpatterns = [
     url(r'^domainlistall/d/(\d+)/$', views.D_data_DomainListAll, name="D_data_DomainListAll"),
     path('domainlistall/d/all/', views.D_all_data_DomainListAll, name="D_all_data_DomainListAll"),
 
-    # 7zfile
-    path('upload/', views.FileView.as_view(), name='upload'),
-    # path('upload/', views.upload_file, name="upload_file"),
-    # path('download/', views.download_file, name="download_file"),
 
 ]
 

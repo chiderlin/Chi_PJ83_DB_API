@@ -1,4 +1,4 @@
-from db_api.models import DomainListAll, DomainTestLog, Files
+from db_api.models import DomainListAll, DomainTestLog
 from rest_framework import serializers
 
 class DomainListAllSerializer(serializers.ModelSerializer):
