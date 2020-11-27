@@ -12,6 +12,7 @@ class DomainListAll(models.Model):
     DomainListInner = models.CharField(max_length=300)
     DomainListOuter = models.CharField(max_length=300)
     CreatedTime = models.DateTimeField(auto_now_add=True, null=True)
+    DomainType = models.CharField(max_length=50)
     class Meta:
         db_table = "DomainListAll"
 
@@ -35,5 +36,7 @@ class DomainTestLog(models.Model):
     ProductScreenshot3 = models.CharField(max_length=300)
     ProductScreenshot4 = models.CharField(max_length=300)
     CreatedTime = models.DateTimeField(auto_now_add=True, null=True)
+    ProductScreenshot4 = models.CharField(max_length=300)
+    DomainType = models.CharField(max_length=50)
     class Meta:
         db_table = "DomainTestLog"

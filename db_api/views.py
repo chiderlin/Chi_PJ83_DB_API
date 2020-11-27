@@ -8,13 +8,17 @@ from db_api.models import DomainTestLog, DomainListAll
 from db_api.serializers import DomainTestLogSerializer, DomainListAllSerializer
 import time
 
-
 # Create your views here.
 @api_view(['POST'])
 def C_data_DomainTestLog(request):
     ''' add new data to database.'''
     if request.method == 'POST':
         data = JSONParser().parse(request)
+        # data_serializer = DomainTestLogSerializer(data=data, many=True,)
+        # if data_serializer.is_valid():
+        #     data_serializer.save()
+        #     return JsonResponse(data_serializer.data, safe=False, status=status.HTTP_201_CREATED)
+        # return JsonResponse(data_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         results = data['data']
         results_data = []
         for result in results:
@@ -47,7 +51,8 @@ def R_data_DomainTestLog(request):
         if domaintestlog.count() == 0:
             return JsonResponse({'message':'No data inside database.'})
         data_serializer = DomainTestLogSerializer(domaintestlog, many=True)
-        return JsonResponse(data_serializer.data, safe=False) # 'safe=False' for objects serialization
+        results = {'results':data_serializer.data}
+        return JsonResponse(results, safe=False) # 'safe=False' for objects serialization
 
 
 @api_view(['PUT'])
@@ -59,7 +64,7 @@ def U_data_DomainTestLog(request, id_):
         # print(domaintestlog.CDN)
         # domaintestlog.TestTime = data["TestTime"]
         # domaintestlog.save()
-        data_serializer = DomainTestLogSerializer(domaintestlog, data =data)
+        data_serializer = DomainTestLogSerializer(domaintestlog, data=data)
         if data_serializer.is_valid():
             data_serializer.save()
             return JsonResponse(data_serializer.data, status=status.HTTP_200_OK)
@@ -73,6 +78,7 @@ def D_data_DomainTestLog(request,id_):
         domaintestlog = DomainTestLog.objects.using('default').get(id=id_)
         domaintestlog.delete() 
         return JsonResponse({'message': f'ID {id_} was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+
 
 @api_view(['DELETE'])
 def D_all_data_DomainTestLog(request):
@@ -101,7 +107,8 @@ def C_data_DomainListAll(request):
                 DomainListInner = result['DomainListInner'],
                 DomainListOuter = result['DomainListOuter'],
             ))
-        DomainListAll.objects.using('default').bulk_create(results_data)
+        test = DomainListAll.objects.using('default').bulk_create(results_data)
+        print(test)
         return JsonResponse(data, status=status.HTTP_201_CREATED)
     return JsonResponse(data, status=status.HTTP_400_BAD_REQUEST)
 
@@ -113,9 +120,9 @@ def R_data_DomainListAll(request):
         domainlistall = DomainListAll.objects.using('slave').all()
         if domainlistall.count() == 0:
             return JsonResponse({'message':'No data inside database.'})
-
         data_serializer = DomainListAllSerializer(domainlistall, many=True)
-        return JsonResponse(data_serializer.data, safe=False)# 'safe=False' for objects serialization
+        results = {'results':data_serializer.data}
+        return JsonResponse(results, safe=False)# 'safe=False' for objects serialization
 
 
 @api_view(['PUT'])

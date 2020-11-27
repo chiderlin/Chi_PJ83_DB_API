@@ -11,11 +11,18 @@ class DomainListAllSerializer(serializers.ModelSerializer):
             'DomainListInner',
             'DomainListOuter',
             'CreatedTime',
+            'DomainType',
         )
+
+# class BulkListSerializer(serializers.ListSerializer):
+#     def create(self, results):
+#         data = [DomainTestLog(**result) for result in results]
+#         return DomainTestLog.objects.using('default').bulk_create(data)
 
 
 class DomainTestLogSerializer(serializers.ModelSerializer):
     class Meta:
+        # list_serializer_class = BulkListSerializer
         model = DomainTestLog
         fields = (
             'id',
@@ -34,6 +41,7 @@ class DomainTestLogSerializer(serializers.ModelSerializer):
             'ProductScreenshot3',
             'ProductScreenshot4',
             'CreatedTime',
+            'DomainType',
         )
 
 
