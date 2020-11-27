@@ -8,6 +8,7 @@ from db_api.models import DomainTestLog, DomainListAll
 from db_api.serializers import DomainTestLogSerializer, DomainListAllSerializer
 import time
 
+
 # Create your views here.
 @api_view(['POST'])
 def C_data_DomainTestLog(request):
