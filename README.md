@@ -24,7 +24,7 @@ http://127.0.0.1:8080/app5/api/mysql/domaintestlog/d/all/
 
 ### POSTMAN測試資料
 {
-    "results":[
+    "data":[
         {
             "TestTime":"2020-11-19 00:00:00.000",
             "UrlIn":"Ttse01",
@@ -78,7 +78,7 @@ http://127.0.0.1:8080/app5/api/mysql/domainlistall/d/all/
 
 ### POSTMAN測試資料
 {
-    "results":[
+    "data":[
         {
             "AgentID":"222",  // 不可重複
             "CodeToMatch":"dvdf", // 不可重複
