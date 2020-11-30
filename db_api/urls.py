@@ -18,22 +18,13 @@ from django.conf.urls import url
 from django.urls import path
 from db_api import views
 
+
 urlpatterns = [ 
-    # DomainTestLog
-    path('domaintestlog/c/', views.C_data_DomainTestLog, name="C_data_DomainTestLog"),
-    path('domaintestlog/r/', views.R_data_DomainTestLog, name="R_data_DomainTestLog"),
-    url(r'^domaintestlog/u/(\d+)/$', views.U_data_DomainTestLog, name="U_data_DomainTestLog"),
-    url(r'^domaintestlog/d/(\d+)/$', views.D_data_DomainTestLog, name="D_data_DomainTestLog"),
-    path('domaintestlog/d/all/', views.D_all_data_DomainTestLog, name="D_all_data_DomainTestLog"),
-
-
-    # DomainListAll
-    path('domainlistall/c/', views.C_data_DomainListAll, name="C_data_DomainListAll"),
-    path('domainlistall/r/', views.R_data_DomainListAll, name="R_data_DomainListAll"),
-    url(r'^domainlistall/u/(\d+)/$', views.U_data_DomainListAll, name="U_data_DomainListAll"),
-    url(r'^domainlistall/d/(\d+)/$', views.D_data_DomainListAll, name="D_data_DomainListAll"),
-    path('domainlistall/d/all/', views.D_all_data_DomainListAll, name="D_all_data_DomainListAll"),
-
-
+    path('c/', views.C_data, name="C_data"),
+    path('r/', views.R_data, name="R_data"),
+    url(r'^u/(\d+)/$', views.U_data, name="U_data"),
+    url(r'^d/(\d+)/$', views.D_data, name="D_data"),
+    path('d/all/', views.D_all_data, name="D_all_data"),
+    
 ]
 

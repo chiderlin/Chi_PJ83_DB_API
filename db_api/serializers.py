@@ -1,8 +1,22 @@
 from db_api.models import DomainListAll, DomainTestLog
 from rest_framework import serializers
 
+class DomainTestLogListSerializer(serializers.ListSerializer):
+    def create(self, validated_data):
+        data = [DomainTestLog(**item) for item in validated_data]
+        return DomainTestLog.objects.bulk_create(data) 
+
+
+class DomainListAllListSerializer(serializers.ListSerializer):
+    def create(self, validated_data):
+        data = [DomainListAll(**item) for item in validated_data]
+        return DomainListAll.objects.bulk_create(data)
+
+
+
 class DomainListAllSerializer(serializers.ModelSerializer):
     class Meta:
+        list_serializer_class = DomainListAllListSerializer
         model = DomainListAll
         fields = (
             'AgentID',
@@ -14,15 +28,10 @@ class DomainListAllSerializer(serializers.ModelSerializer):
             'DomainType',
         )
 
-# class BulkListSerializer(serializers.ListSerializer):
-#     def create(self, results):
-#         data = [DomainTestLog(**result) for result in results]
-#         return DomainTestLog.objects.using('default').bulk_create(data)
-
 
 class DomainTestLogSerializer(serializers.ModelSerializer):
     class Meta:
-        # list_serializer_class = BulkListSerializer
+        list_serializer_class = DomainTestLogListSerializer
         model = DomainTestLog
         fields = (
             'id',
@@ -43,5 +52,3 @@ class DomainTestLogSerializer(serializers.ModelSerializer):
             'CreatedTime',
             'DomainType',
         )
-
-
