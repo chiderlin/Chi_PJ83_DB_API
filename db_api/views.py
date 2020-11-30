@@ -31,17 +31,17 @@ def C_data(request):
         if tablename == "domaintestlog":
             data_serializer = serializers(data=input_, many=True)  
             if data_serializer.is_valid():  
-                data_serializer.save('default')
+                data_serializer.save()
                 return JsonResponse(data, safe=False, status=status.HTTP_201_CREATED)
             return JsonResponse(data_serializer.errors, safe=False, status=status.HTTP_400_BAD_REQUEST)
         elif tablename == "domainlistall":
             data_serializer = serializers(data=input_, many=True)
             if data_serializer.is_valid():
-                data_serializer.save('default')
+                data_serializer.save()
                 return JsonResponse(data, safe=False, status=status.HTTP_201_CREATED)
             return JsonResponse(data_serializer.errors, safe=False, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return JsonResponse({"message": "Database doesn't exists."})
+            return JsonResponse({"message": "Table doesn't exist."})
 
 
 @api_view(['GET'])
@@ -66,7 +66,7 @@ def R_data(request):
             results = {"results": data_serializer.data}
             return JsonResponse(results, safe=False)
         else:
-            return JsonResponse({"message": "Database doesn't exists."})
+            return JsonResponse({"message": "Table doesn't exist."})
 
 
 @api_view(['PUT'])
@@ -84,7 +84,7 @@ def U_data(request, id_):
             # domaintestlog.save()
             data_serializer = serializers(domaintestlog, data=data)
             if data_serializer.is_valid():
-                data_serializer.save('default')
+                data_serializer.save()
                 successed = {"successed": data_serializer.data}
                 return JsonResponse(successed, status=status.HTTP_200_OK)
             return JsonResponse(data_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -92,12 +92,12 @@ def U_data(request, id_):
             domainlistall = model.objects.using('default').get(id=id_)
             data_serializer = serializers(domainlistall, data=data)
             if data_serializer.is_valid():
-                data_serializer.save('default')
+                data_serializer.save()
                 successed = {"successed": data_serializer.data}
                 return JsonResponse(successed, status=status.HTTP_200_OK)
             return JsonResponse(data_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return JsonResponse({"message": "Database doesn't exists."})
+            return JsonResponse({"message": "Table doesn't exist."})
 
 
 @api_view(['DELETE'])
@@ -122,7 +122,7 @@ def D_data(request, id_):
             except:
                 return JsonResponse({"message": "ID doesn't exist"}, status=status.HTTP_204_NO_CONTENT)
         else:
-            return JsonResponse({"message": "Database doesn't exists."})
+            return JsonResponse({"message": "Table doesn't exist."})
 
 
 @api_view(['DELETE'])
@@ -145,7 +145,7 @@ def D_all_data(request):
                 return JsonResponse({'message': 'Database was already empty.'})
             return JsonResponse({'message': f'Total {count[0]} was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
         else:
-            return JsonResponse({"message": "Database doesn't exists."})
+            return JsonResponse({"message": "Table doesn't exist."})
 
 
 def main(tablename):

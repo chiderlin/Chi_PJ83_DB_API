@@ -4,13 +4,13 @@ from rest_framework import serializers
 class DomainTestLogListSerializer(serializers.ListSerializer):
     def create(self, validated_data):
         data = [DomainTestLog(**item) for item in validated_data]
-        return DomainTestLog.objects.bulk_create(data) 
+        return DomainTestLog.objects.using('default').bulk_create(data) 
 
 
 class DomainListAllListSerializer(serializers.ListSerializer):
     def create(self, validated_data):
         data = [DomainListAll(**item) for item in validated_data]
-        return DomainListAll.objects.bulk_create(data)
+        return DomainListAll.objects.using('default').bulk_create(data)
 
 
 
