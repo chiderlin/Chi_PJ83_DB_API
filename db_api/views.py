@@ -21,12 +21,13 @@ type_ = [[DomainTestLog, DomainTestLogSerializer],
 
 
 @api_view(['POST'])
-def C_data(request, tablename="domaintestlog"):
+def C_data(request):
     ''' add new data to database.'''
-    model, serializers = main(tablename)
+    data = JSONParser().parse(request)
     if request.method == 'POST':
-        data = JSONParser().parse(request)  
+        tablename = data['tablename']
         input_ = data['data']
+        model, serializers = main(tablename)
         if tablename == "domaintestlog":
             data_serializer = serializers(data=input_, many=True)  
             if data_serializer.is_valid():  
@@ -44,10 +45,12 @@ def C_data(request, tablename="domaintestlog"):
 
 
 @api_view(['GET'])
-def R_data(request, tablename="domaintestlog"):
+def R_data(request):
     '''show all of the data'''
-    model, serializers = main(tablename)
+    data = JSONParser().parse(request)
     if request.method == 'GET':
+        tablename = data['tablename']
+        model, serializers = main(tablename)
         if tablename == "domaintestlog":
             domaintestlog = model.objects.using('slave').all()
             if domaintestlog.count() == 0:
@@ -67,11 +70,13 @@ def R_data(request, tablename="domaintestlog"):
 
 
 @api_view(['PUT'])
-def U_data(request, id_, tablename):
+def U_data(request, id_):
     ''' update specific data using id. '''
-    model, serializers = main(tablename)
+    data = JSONParser().parse(request)
     if request.method == 'PUT':
-        data = JSONParser().parse(request)
+        input_ = data['data'][0]
+        tablename = data['tablename']
+        model, serializers = main(tablename)
         if tablename == "domaintestlog":
             domaintestlog = model.objects.using('default').get(id=id_)
             # print(domaintestlog.CDN)
@@ -96,10 +101,12 @@ def U_data(request, id_, tablename):
 
 
 @api_view(['DELETE'])
-def D_data(request, id_, tablename):
+def D_data(request, id_):
     ''' delete specific data using id. '''
-    model, serializers = main(tablename)
+    data = JSONParser().parse(request)
     if request.method == 'DELETE':
+        tablename = data['tablename']
+        model, serializers = main(tablename)
         if tablename == "domaintestlog":
             try:
                 domaintestlog = model.objects.using('default').get(id=id_)
@@ -119,10 +126,12 @@ def D_data(request, id_, tablename):
 
 
 @api_view(['DELETE'])
-def D_all_data(request, tablename):
+def D_all_data(request):
     ''' delete all. '''
-    model, serializers = main(tablename)
+    data = JSONParser().parse(request)
     if request.method == 'DELETE':
+        tablename = data['tablename']
+        model, serializers = main(tablename)
         if tablename == "domaintestlog":
             count = model.objects.all().using('default').delete()
             print(count)

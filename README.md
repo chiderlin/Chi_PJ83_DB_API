@@ -23,6 +23,7 @@ http://127.0.0.1:8080/app5/api/mysql/d/all/
 
 ### DomainTestLog測試資料
 {
+    "tablename":"domaintestlog",
     "data":[
         {
             "TestTime":"2020-11-19 00:00:00.000",
@@ -66,6 +67,7 @@ http://127.0.0.1:8080/app5/api/mysql/d/all/
 
 ### DomainListAll測試資料
 {
+    "tablename":"domainlistall",
     "data":[
         {
             "AgentID":"222",  // 不可重複
