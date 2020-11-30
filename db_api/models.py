@@ -31,12 +31,11 @@ class DomainTestLog(models.Model):
     PageLoadTime = models.FloatField()
     Status = models.CharField(max_length=50)
     IPScreenshot = models.CharField(max_length=300)
-    ProductScreenshot1 = models.CharField(max_length=300)
-    ProductScreenshot2 = models.CharField(max_length=300)
-    ProductScreenshot3 = models.CharField(max_length=300)
-    ProductScreenshot4 = models.CharField(max_length=300)
+    ProductScreenshot1 = models.CharField(max_length=300, blank=True, null=True)
+    ProductScreenshot2 = models.CharField(max_length=300, blank=True, null=True)
+    ProductScreenshot3 = models.CharField(max_length=300, blank=True, null=True)
+    ProductScreenshot4 = models.CharField(max_length=300, blank=True, null=True)
     CreatedTime = models.DateTimeField(auto_now_add=True, null=True)
-    ProductScreenshot4 = models.CharField(max_length=300)
     DomainType = models.CharField(max_length=50)
     class Meta:
         db_table = "DomainTestLog"
