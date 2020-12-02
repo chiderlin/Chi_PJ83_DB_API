@@ -47,9 +47,10 @@ def C_data(request):
 @api_view(['GET'])
 def R_data(request):
     '''show all of the data'''
-    data = JSONParser().parse(request)
     if request.method == 'GET':
-        tablename = data['tablename']
+        tablename = request.GET.get("tablename", None)
+        if not tablename:
+            return JsonResponse({'message': 'Params:tablename'})
         model, serializers = main(tablename)
         if tablename == "domaintestlog":
             domaintestlog = model.objects.using('slave').all()
@@ -103,9 +104,12 @@ def U_data(request, id_):
 @api_view(['DELETE'])
 def D_data(request, id_):
     ''' delete specific data using id. '''
-    data = JSONParser().parse(request)
+    # data = JSONParser().parse(request)
+    # tablename = data['tablename']
     if request.method == 'DELETE':
-        tablename = data['tablename']
+        tablename = request.GET.get("tablename",None)
+        if not tablename:
+            return JsonResponse({'message': 'Params:tablename'})
         model, serializers = main(tablename)
         if tablename == "domaintestlog":
             try:
@@ -128,9 +132,12 @@ def D_data(request, id_):
 @api_view(['DELETE'])
 def D_all_data(request):
     ''' delete all. '''
-    data = JSONParser().parse(request)
+    # data = JSONParser().parse(request)
+    # tablename = data['tablename']
     if request.method == 'DELETE':
-        tablename = data['tablename']
+        tablename = request.GET.get("tablename",None)
+        if not tablename:
+            return JsonResponse({'message': 'Params:tablename'})
         model, serializers = main(tablename)
         if tablename == "domaintestlog":
             count = model.objects.all().using('default').delete()
