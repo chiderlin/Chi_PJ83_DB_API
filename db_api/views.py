@@ -25,7 +25,9 @@ def C_data(request):
     ''' add new data to database.'''
     data = JSONParser().parse(request)
     if request.method == 'POST':
-        tablename = data['tablename']
+        if 'tablename' not in data:
+            return JsonResponse({"message": "Body:tablename"})
+        tablename = data['tablename'].lower()
         input_ = data['data']
         model, serializers = main(tablename)
         if tablename == "domaintestlog":
@@ -48,9 +50,10 @@ def C_data(request):
 def R_data(request):
     '''show all of the data'''
     if request.method == 'GET':
-        tablename = request.GET.get("tablename", None)
+        tablename = request.GET.get("tablename",None)
         if not tablename:
             return JsonResponse({'message': 'Params:tablename'})
+        tablename = tablename.lower()
         model, serializers = main(tablename)
         if tablename == "domaintestlog":
             domaintestlog = model.objects.using('slave').all()
@@ -75,15 +78,19 @@ def U_data(request, id_):
     ''' update specific data using id. '''
     data = JSONParser().parse(request)
     if request.method == 'PUT':
+        if 'data' not in data:
+            return JsonResponse({"message": "{data:[{}]..}"})
+        if 'tablename' not in data:
+            return JsonResponse({"message": "Body:tablename"})
+        tablename = data['tablename'].lower()
         input_ = data['data'][0]
-        tablename = data['tablename']
         model, serializers = main(tablename)
         if tablename == "domaintestlog":
             domaintestlog = model.objects.using('default').get(id=id_)
             # print(domaintestlog.CDN)
             # domaintestlog.TestTime = data["TestTime"]
             # domaintestlog.save()
-            data_serializer = serializers(domaintestlog, data=data)
+            data_serializer = serializers(domaintestlog, data=input_)
             if data_serializer.is_valid():
                 data_serializer.save()
                 successed = {"successed": data_serializer.data}
@@ -91,7 +98,7 @@ def U_data(request, id_):
             return JsonResponse(data_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         elif tablename == "domainlistall":
             domainlistall = model.objects.using('default').get(id=id_)
-            data_serializer = serializers(domainlistall, data=data)
+            data_serializer = serializers(domainlistall, data=input_)
             if data_serializer.is_valid():
                 data_serializer.save()
                 successed = {"successed": data_serializer.data}
@@ -110,6 +117,7 @@ def D_data(request, id_):
         tablename = request.GET.get("tablename",None)
         if not tablename:
             return JsonResponse({'message': 'Params:tablename'})
+        tablename = tablename.lower()
         model, serializers = main(tablename)
         if tablename == "domaintestlog":
             try:
@@ -138,16 +146,15 @@ def D_all_data(request):
         tablename = request.GET.get("tablename",None)
         if not tablename:
             return JsonResponse({'message': 'Params:tablename'})
+        tablename = tablename.lower()
         model, serializers = main(tablename)
         if tablename == "domaintestlog":
             count = model.objects.all().using('default').delete()
-            print(count)
             if count[1]["myapp.DomainTestLog"] == 0:
                 return JsonResponse({'message': 'Database was already empty.'})
             return JsonResponse({'message': f'Total {count[0]} was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
         elif tablename == "domainlistall":
             count = model.objects.all().using('default').delete()
-            print(count)
             if count[1]["myapp.DomainListAll"] == 0:
                 return JsonResponse({'message': 'Database was already empty.'})
             return JsonResponse({'message': f'Total {count[0]} was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
