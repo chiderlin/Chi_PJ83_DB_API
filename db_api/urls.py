@@ -23,8 +23,9 @@ urlpatterns = [
     path('c/', views.C_data, name="C_data"),
     path('r/', views.R_data, name="R_data"),
     url(r'^u/(\d+)/$', views.U_data, name="U_data"),
-    url(r'^d/(\d+)/$', views.D_data, name="D_data"),
-    path('d/all/', views.D_all_data, name="D_all_data"),
+    # url(r'^d/(\d+)/$', views.D_data, name="D_data"),
+    path('d/<str:tablename>/<int:id_>/', views.D_data, name="D_data"),
+    path('d/<str:tablename>/all/', views.D_all_data, name="D_all_data"),
     
 ]
 

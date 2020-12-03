@@ -109,15 +109,12 @@ def U_data(request, id_):
 
 
 @api_view(['DELETE'])
-def D_data(request, id_):
+def D_data(request, tablename, id_):
     ''' delete specific data using id. '''
     # data = JSONParser().parse(request)
     # tablename = data['tablename']
     if request.method == 'DELETE':
-        tablename = request.GET.get("tablename",None)
-        if not tablename:
-            return JsonResponse({'message': 'Params:tablename'})
-        tablename = tablename.lower()
+
         model, serializers = main(tablename)
         if tablename == "domaintestlog":
             try:
@@ -138,24 +135,21 @@ def D_data(request, id_):
 
 
 @api_view(['DELETE'])
-def D_all_data(request):
+def D_all_data(request, tablename):
     ''' delete all. '''
     # data = JSONParser().parse(request)
     # tablename = data['tablename']
     if request.method == 'DELETE':
-        tablename = request.GET.get("tablename",None)
-        if not tablename:
-            return JsonResponse({'message': 'Params:tablename'})
-        tablename = tablename.lower()
+
         model, serializers = main(tablename)
         if tablename == "domaintestlog":
             count = model.objects.all().using('default').delete()
-            if count[1]["myapp.DomainTestLog"] == 0:
+            if count[1]["db_api.DomainTestLog"] == 0:
                 return JsonResponse({'message': 'Database was already empty.'})
             return JsonResponse({'message': f'Total {count[0]} was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
         elif tablename == "domainlistall":
             count = model.objects.all().using('default').delete()
-            if count[1]["myapp.DomainListAll"] == 0:
+            if count[1]["db_api.DomainListAll"] == 0:
                 return JsonResponse({'message': 'Database was already empty.'})
             return JsonResponse({'message': f'Total {count[0]} was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
         else:
