@@ -59,11 +59,8 @@ def R_data(request):
         
         if tablename == "domaintestlog":
             domaintestlog = model.objects.using('slave').all()
-                # print(dir(model.objects))
             if filter_data:
                 data = json.loads(filter_data)
-                print(dir(json))
-                print(data)
                 try:
                     domaintestlog = model.objects.using('slave').complex_filter(data)
                 except Exception as e:
