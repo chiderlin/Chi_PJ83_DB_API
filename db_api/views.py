@@ -48,38 +48,39 @@ def C_data(request):
 
 @api_view(['GET'])
 def R_data(request):
-    '''show all of the data'''
+    '''show data'''
     if request.method == 'GET':
-        tablename = request.GET.get("tablename",None)
-        domaintype = request.GET.get("domaintype", None)
+        tablename = request.GET.get("tablename", None)
+        key = request.GET.get("key", None)
+        value = request.GET.get("value", None)
         if not tablename:
             return JsonResponse({'message': 'Params:tablename'})
         tablename = tablename.lower()
         model, serializers = main(tablename)
-        domaintype_list = ["1", "2", "3"]
         if tablename == "domaintestlog":
-            if not domaintype:
-                domaintestlog = model.objects.using('slave').all()
-            elif domaintype in domaintype_list:
-                domaintestlog = model.objects.using('slave').filter(DomainType=domaintype)
-            else:
-                return JsonResponse({'message': f'domaintype list:{domaintype_list}'})
+            domaintestlog = model.objects.using('slave').all()
+            if key and value:
+                try:
+                    domaintestlog = model.objects.using('slave').complex_filter({f'{key}':f'{value}'})
+                except Exception as e:
+                    return JsonResponse({'message': f'{e}'})
+
             if domaintestlog.count() == 0:
-                return JsonResponse({'message': 'No data inside database.'})
+                return JsonResponse({'message': 'No data.'})
             data_serializer = serializers(domaintestlog, many=True)
             results = {"results": data_serializer.data}
             return JsonResponse(results, safe=False)
 
         elif tablename == "domainlistall":
-            if not domaintype:
-                domainlistall = model.objects.using('slave').all()
-            elif domaintype in domaintype_list:
-                domainlistall = model.objects.using('slave').filter(DomainType=domaintype)
-            else:
-                return JsonResponse({'message': f'domaintype list:{domaintype_list}'})
-            
+            domainlistall = model.objects.using('slave').all()
+            if key and value:
+                try:
+                    domainlistall = model.objects.using('slave').complex_filter({f'{key}':f'{value}'})
+                except Exception as e:
+                    return JsonResponse({'message': f'{e}'})
+
             if domainlistall.count() == 0:
-                return JsonResponse({'message': 'No data inside database.'})
+                return JsonResponse({'message': 'No data.'})
             data_serializer = serializers(domainlistall, many=True)
             results = {"results": data_serializer.data}
             return JsonResponse(results, safe=False)

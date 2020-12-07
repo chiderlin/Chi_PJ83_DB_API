@@ -11,6 +11,12 @@ http://127.0.0.1:8080/app5/api/mysql/c/
 
 ### 讀取:GET
 http://127.0.0.1:8080/app5/api/mysql/r/
+參數:
+1. tablename 
+2. key (欄位名稱)(filter功能, 可設可不設)
+3. value (欄位值)
+
+
 
 ### 修改(單筆):PUT
 http://127.0.0.1:8080/app5/api/mysql/u/{id}/
