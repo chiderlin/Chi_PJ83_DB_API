@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from db_api.models import DomainTestLog, DomainListAll
 from db_api.serializers import DomainTestLogSerializer, DomainListAllSerializer
 import time
-
+import json
 
 # Create your views here.
 '''
@@ -51,19 +51,24 @@ def R_data(request):
     '''show data'''
     if request.method == 'GET':
         tablename = request.GET.get("tablename", None)
-        key = request.GET.get("key", None)
-        value = request.GET.get("value", None)
+        filter_data = request.GET.get("filter_data", None)
         if not tablename:
             return JsonResponse({'message': 'Params:tablename'})
         tablename = tablename.lower()
         model, serializers = main(tablename)
+        
         if tablename == "domaintestlog":
             domaintestlog = model.objects.using('slave').all()
-            if key and value:
+                # print(dir(model.objects))
+            if filter_data:
+                data = json.loads(filter_data)
+                print(dir(json))
+                print(data)
                 try:
-                    domaintestlog = model.objects.using('slave').complex_filter({f'{key}':f'{value}'})
+                    domaintestlog = model.objects.using('slave').complex_filter(data)
                 except Exception as e:
                     return JsonResponse({'message': f'{e}'})
+
 
             if domaintestlog.count() == 0:
                 return JsonResponse({'message': 'No data.'})
@@ -73,11 +78,13 @@ def R_data(request):
 
         elif tablename == "domainlistall":
             domainlistall = model.objects.using('slave').all()
-            if key and value:
+            if filter_data:
+                data = json.loads(filter_data)
                 try:
-                    domainlistall = model.objects.using('slave').complex_filter({f'{key}':f'{value}'})
+                    domainlistall = model.objects.using('slave').complex_filter(data)
                 except Exception as e:
                     return JsonResponse({'message': f'{e}'})
+
 
             if domainlistall.count() == 0:
                 return JsonResponse({'message': 'No data.'})
