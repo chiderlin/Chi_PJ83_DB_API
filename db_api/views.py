@@ -51,19 +51,33 @@ def R_data(request):
     '''show all of the data'''
     if request.method == 'GET':
         tablename = request.GET.get("tablename",None)
+        domaintype = request.GET.get("domaintype", None)
         if not tablename:
             return JsonResponse({'message': 'Params:tablename'})
         tablename = tablename.lower()
         model, serializers = main(tablename)
+        domaintype_list = ["1", "2", "3"]
         if tablename == "domaintestlog":
-            domaintestlog = model.objects.using('slave').all()
+            if not domaintype:
+                domaintestlog = model.objects.using('slave').all()
+            elif domaintype in domaintype_list:
+                domaintestlog = model.objects.using('slave').filter(DomainType=domaintype)
+            else:
+                return JsonResponse({'message': f'domaintype list:{domaintype_list}'})
             if domaintestlog.count() == 0:
                 return JsonResponse({'message': 'No data inside database.'})
             data_serializer = serializers(domaintestlog, many=True)
             results = {"results": data_serializer.data}
             return JsonResponse(results, safe=False)
+
         elif tablename == "domainlistall":
-            domainlistall = model.objects.using('slave').all()
+            if not domaintype:
+                domainlistall = model.objects.using('slave').all()
+            elif domaintype in domaintype_list:
+                domainlistall = model.objects.using('slave').filter(DomainType=domaintype)
+            else:
+                return JsonResponse({'message': f'domaintype list:{domaintype_list}'})
+            
             if domainlistall.count() == 0:
                 return JsonResponse({'message': 'No data inside database.'})
             data_serializer = serializers(domainlistall, many=True)
