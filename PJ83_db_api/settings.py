@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 
+try:
+    ENV = os.environ["ENV"]
+except:
+    raise NotImplementedError("Variable ENV not found, it needs to be defined from docker-compose.yml")
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -95,32 +99,123 @@ REST_FRAMEWORK = {
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-DATABASES = {
-    'default': { # default, master
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'DEV_PJ83BN',
-        'USER': 'root',
-        'PASSWORD': 'qwer1234',
-        'HOST': '172.28.0.10',
-        'PORT': '3306',
-    },
-    'slave': { # Read-Only
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'DEV_PJ83BN',
-        'USER': 'root',
-        'PASSWORD': 'qwer1234',
-        'HOST': '172.28.0.11',
-        'PORT': '3306',
-    },
-    'test':{
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testdb',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
+
+if ENV == 'DEV':
+    """
+    No read-write seperated, both master and slave use same db.
+    """
+    DATABASES = {
+        'default': { # default, master
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'DEV_PJ83BN',
+            'USER': 'root',
+            'PASSWORD': '1qaz@WSX',
+            'HOST': '10.80.1.15',
+            'PORT': '30010',
+        },
+        'slave': { # Read-Only
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'DEV_PJ83BN',
+            'USER': 'root',
+            'PASSWORD': '1qaz@WSX',
+            'HOST': '10.80.1.15',
+            'PORT': '30010',
+        }
     }
-}
+elif ENV == 'UAT':
+    """
+    No read-write seperated, both master and slave use same db.
+    """
+    DATABASES = {
+        'default': { # default, master
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'UAT_PJ83BN',
+            'USER': 'root',
+            'PASSWORD': '1qaz@WSX',
+            'HOST': '10.80.1.15',
+            'PORT': '30020',
+        },
+        'slave': { # Read-Only
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'UAT_PJ83BN',
+            'USER': 'root',
+            'PASSWORD': '1qaz@WSX',
+            'HOST': '10.80.1.15',
+            'PORT': '30020',
+        }
+    }
+elif ENV == 'PROD':
+    """
+    No read-write seperated, both master and slave use same db.
+    """
+    DATABASES = {
+        'default': { # default, master
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'PJ83BN',
+            'USER': 'root',
+            'PASSWORD': '1qaz@WSX',
+            'HOST': '10.80.1.15',
+            'PORT': '30030',
+        },
+        'slave': { # Read-Only
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'PJ83BN',
+            'USER': 'root',
+            'PASSWORD': '1qaz@WSX',
+            'HOST': '10.80.1.15',
+            'PORT': '30030',
+        }
+    }
+elif ENV == 'ALIYUN':
+    """
+    read-write seperated (CQRS)
+    """
+    DATABASES = {
+        'default': { # default, master
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'PJ83BN',
+            'USER': 'root',
+            'PASSWORD': '1qaz@WSX',
+            'HOST': '47.101.61.188',
+            'PORT': '33061',
+        },
+        'slave': { # Read-Only
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'PJ83BN',
+            'USER': 'root',
+            'PASSWORD': '1qaz@WSX',
+            'HOST': '47.101.61.188',
+            'PORT': '33062',
+        }
+    }
+
+
+# DATABASES = {
+#     'default': { # default, master
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'DEV_PJ83BN',
+#         'USER': 'root',
+#         'PASSWORD': 'qwer1234',
+#         'HOST': '172.28.0.10',
+#         'PORT': '3306',
+#     },
+#     'slave': { # Read-Only
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'DEV_PJ83BN',
+#         'USER': 'root',
+#         'PASSWORD': 'qwer1234',
+#         'HOST': '172.28.0.11',
+#         'PORT': '3306',
+#     },
+#     'test':{
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'testdb',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # Password validation
