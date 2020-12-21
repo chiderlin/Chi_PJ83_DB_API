@@ -21,6 +21,7 @@ class DomainTestLog(models.Model):
     """
     a migrate --fake table.
     """
+    id = models.AutoField(primary_key=True)
     TestTime = models.DateTimeField(blank=True, null=True)
     UrlIn = models.CharField(max_length=200)
     UrlOut = models.CharField(max_length=200)
@@ -30,6 +31,7 @@ class DomainTestLog(models.Model):
     CDNIP = models.CharField(max_length=200)
     PageLoadTime = models.FloatField()
     Status = models.CharField(max_length=50)
+    Browser = models.CharField(max_length=50)
     IPScreenshot = models.CharField(max_length=300)
     ProductScreenshot1 = models.CharField(max_length=300, blank=True, null=True)
     ProductScreenshot2 = models.CharField(max_length=300, blank=True, null=True)
@@ -39,3 +41,37 @@ class DomainTestLog(models.Model):
     DomainType = models.CharField(max_length=50)
     class Meta:
         db_table = "DomainTestLog"
+
+
+class ForwardDomainListAll(models.Model):
+    """
+    a migrate --fake table.
+    """
+    id = models.AutoField(primary_key=True)
+    AgentID = models.CharField(max_length=30, unique=True)
+    UrlIn = models.CharField(max_length=200)
+    UrlOut = models.CharField(max_length=200)
+    MyZone = models.CharField(max_length=50)
+    DomainType = models.CharField(max_length=50)
+    CreatedTime = models.DateTimeField(auto_now_add=True, null=True)
+    class Meta:
+        db_table = "ForwardDomainList"
+
+
+class ForwardDomainTestLog(models.Model):
+    """
+    a migrate --fake table.
+    """
+    id = models.AutoField(primary_key=True)
+    AgentID = models.CharField(max_length=30)
+    TestTime = models.DateTimeField(blank=True, null=True)
+    UrlIn = models.CharField(max_length=200)
+    UrlOut = models.CharField(max_length=200)
+    MyIP = models.CharField(max_length=200)
+    MyZone = models.CharField(max_length=200)
+    Status = models.CharField(max_length=50)
+    Browser = models.CharField(max_length=50)
+    CreatedTime = models.DateTimeField(auto_now_add=True, null=True)
+    DomainType = models.CharField(max_length=50)
+    class Meta:
+        db_table = "ForwardDomainTestLog"
