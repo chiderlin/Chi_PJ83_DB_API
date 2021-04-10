@@ -2,6 +2,25 @@
 ## CRUD MySQL 功能
 
 
+## models.py裡的class Meta是什麼?
+https://zhuanlan.zhihu.com/p/61732533
+
+
+## 為什麼序列化Serialize?
+## Serializers.py是什麼?
+https://zh.wikipedia.org/wiki/%E5%BA%8F%E5%88%97%E5%8C%96
+
+1. 對同步控制而言，表示強制在同一時間內進行單一存取。
+2. 在數據儲存與傳送的部分指 將一個資料儲存至檔案或是記憶體緩衝。或者網絡傳送資料時進行編碼的過程。或者伺服器將資料儲存到檔案或資料庫。
+相反過程則稱 反序列化。
+
+* 序列化 serialization 也稱 物件編組(marshalling) (python一個序列化模組叫marshmallow)
+* 反序列化 deserialization 也稱 解編組(unmarshalling)
+
+
+
+
+## 以下是API document 
 ## 兩個Tables
 1. DomainTestLog
 2. DomainListAll
