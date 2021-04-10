@@ -1,13 +1,11 @@
-# PJ83_DB_API
-## CRUD MySQL 功能
+# PJ83_DB_API => CRUD MySQL 功能
 
 
 ## models.py裡的class Meta是什麼?
 https://zhuanlan.zhihu.com/p/61732533
 
 
-## 為什麼序列化Serialize?
-## Serializers.py是什麼?
+## 為什麼序列化Serialize?  /  Serializers.py是什麼?
 https://zh.wikipedia.org/wiki/%E5%BA%8F%E5%88%97%E5%8C%96
 
 1. 對同步控制而言，表示強制在同一時間內進行單一存取。
